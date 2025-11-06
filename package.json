@@ -1,0 +1,51 @@
+{
+  "name": "vonic",
+  "version": "1.0.0",
+  "description": "Vonage/NovaSonic Connector",
+  "main": "dist/server.js",
+  "scripts": {
+    "build": "tsc",
+    "dev": "ts-node src/index.ts",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "mberkeland",
+  "license": "ISC",
+  "dependencies": {
+    "@aws-sdk/client-bedrock-agent-runtime": "^3.840.0",
+    "@aws-sdk/client-bedrock-runtime": "^3.785.0",
+    "@aws-sdk/credential-providers": "^3.782.0",
+    "@modelcontextprotocol/sdk": "^1.17.5",
+    "@smithy/node-http-handler": "^4.0.4",
+    "@vonage/auth": "^1.12.0",
+    "@vonage/messages": "^1.19.0",
+    "@vonage/server-client": "^1.17.0",
+    "@vonage/server-sdk": "^3.24.0",
+    "@vonage/vcr-sdk": "^1.4.0",
+    "@vonage/video": "^1.25.0",
+    "aws-sdk": "^2.1692.0",
+    "axios": "^1.8.4",
+    "body-parser": "^2.2.0",
+    "dotenv": "^16.5.0",
+    "expres": "^0.0.5",
+    "express": "^5.1.0",
+    "express-ws": "^5.0.2",
+    "http": "^0.0.1-security",
+    "jsonwebtoken": "^9.0.2",
+    "mcp-client": "^1.13.1",
+    "pusher": "^5.2.0",
+    "request": "^2.88.2",
+    "rxjs": "^7.8.2",
+    "s": "^1.0.0",
+    "socket.io": "^4.8.1",
+    "wav-headers": "^1.0.1",
+    "ws": "^8.18.3"
+  },
+  "devDependencies": {
+    "@types/express": "^5.0.1",
+    "@types/express-ws": "^3.0.5",
+    "@types/ws": "^8.18.1",
+    "ts-node": "^10.9.2",
+    "tsx": "^4.19.3",
+    "typescript": "^5.8.3"
+  }
+}

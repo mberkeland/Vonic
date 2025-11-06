@@ -1,0 +1,4 @@
+cd /Users/mberkeland/sandbox/NovaSonic/Vonic/src
+npx tsc --outdir js
+cd ..
+vcr deploy
