@@ -1,6 +1,6 @@
-# Gowssip
+# Vonic
 
-SIP to WebSocket connections for voice applications.
+Vonage WebSocket to NovaSonic connections for voice applications.
 
 ## Local Development
 
