@@ -136,16 +136,4 @@ export const dTools = [
       },
     },
   },
-  {
-    toolSpec: {
-      name: "ceecee",
-      description:
-        "Always call this tool before transferring, after final confirmation of the user's intentions, when we know the user wants to talk to an agent, make a purchase, requires support or help, or when we have determined the primary skill needed to meet the user's needs.",
-      inputSchema: {
-        json: ceeceeSchema
-      },
-      url: "https://vids.vonage.com/mcp/ceecee",
-      key: "",
-    },
-  },
 ]; 

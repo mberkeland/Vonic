@@ -3,7 +3,6 @@ import {
   BedrockRuntimeClientConfig,
   InvokeModelWithBidirectionalStreamCommand,
   InvokeModelWithBidirectionalStreamInput,
-  ApplyGuardrailCommand,
 } from "@aws-sdk/client-bedrock-runtime";
 import axios from "axios";
 //@ts-ignore
@@ -404,7 +403,7 @@ export class NovaSonicBidirectionalStreamClient {
     const kbClient = new BedrockKnowledgeBaseClient();
 
     // Replace with your actual Knowledge Base ID
-    const KNOWLEDGE_BASE_ID = kbId; //'OWELQLIRZB';
+    const KNOWLEDGE_BASE_ID = kbId; 
 
     try {
       console.log(`Searching for: "${query}"`);
@@ -516,10 +515,6 @@ export class NovaSonicBidirectionalStreamClient {
       throw new Error(`Stream session ${sessionId} not found`);
     }
     try {
-      //var err = new Error(`Stream session ${sessionId} FORCING AN ERROR FOR TESTING`);
-      //throw err;
-      // Set up initial events for this session
-      //return false;
       this.setupSessionStartEvent(sessionId);
 
       // Create the bidirectional stream with session-specific async iterator
@@ -530,10 +525,8 @@ export class NovaSonicBidirectionalStreamClient {
       try {
         response = await this.bedrockRuntimeClient.send(
           new InvokeModelWithBidirectionalStreamCommand({
-            modelId: "amazon.nova-sonic-v1:0",
-            //modelId: "xamazon.nova-sonic-v1:0",
+            modelId: "amazon.nova-2-sonic-v1:0",
             body: asyncIterable,
-            //guardrailIdentifier: "x85t4nhck494"
           })
         );
       } catch (err) {
@@ -564,7 +557,6 @@ export class NovaSonicBidirectionalStreamClient {
       if (session.isActive) {
         this.closeSession(sessionId);
       }
-      //session.isActive = false;
       return false;
     }
   }
@@ -681,8 +673,6 @@ export class NovaSonicBidirectionalStreamClient {
               // Get next item from the session's queue
               const nextEvent = session.queue.shift();
               eventCount++;
-
-              //console.log(`Sending event #${ eventCount } for session ${ sessionId }: ${ JSON.stringify(nextEvent).substring(0, 100) }...`);
 
               return {
                 value: {
@@ -817,21 +807,8 @@ export class NovaSonicBidirectionalStreamClient {
               } else {
                 // Handle other events
                 const eventKeys = Object.keys(jsonResponse.event || {});
-                // If we want to print out the tomen usage, uncomment the following line
+                // If we want to print out the token usage, uncomment the following line
                 //if(eventKeys[0] == 'usageEvent')  console.log(`Usage event: `,jsonResponse);
-                if (false) {
-                  //console.log(`Event keys for session ${sessionId}: `, eventKeys);
-                  //if(eventKeys[0] == 'usageEvent')  console.log(`Handling other events: `,jsonResponse);
-                  if (eventKeys.length > 0) {
-                    this.dispatchEvent(
-                      sessionId,
-                      eventKeys[0],
-                      jsonResponse.event
-                    );
-                  } else if (Object.keys(jsonResponse).length > 0) {
-                    this.dispatchEvent(sessionId, "unknown", jsonResponse);
-                  }
-                }
               }
             } catch (e) {
               console.log(
@@ -914,17 +891,6 @@ export class NovaSonicBidirectionalStreamClient {
     console.log(`Setting up prompt start event for session ${sessionId}...`);
     const session = this.activeSessions.get(sessionId);
     if (!session) return;
-    // Prompt start event
-    // Set up prompt-specific list of tools...
-    /*
-    var tools = [];
-    dTools.forEach((tool) => {
-      //console.log("Tool? ", session.tools,tool.toolSpec.name )
-      if (tool.toolSpec.name == 'getDateAndTimeTool' || tool.toolSpec.name == 'getWeatherTool' || session.tools.includes(tool.toolSpec.name)) {
-        tools.push(tool);
-      }
-    });
-    */
     var tools = session.tools;
     console.log("Applied tools: ", tools);
     this.addEventToSessionQueue(sessionId, {
@@ -940,49 +906,6 @@ export class NovaSonicBidirectionalStreamClient {
           },
           toolConfiguration: {
             tools: tools,
-            /*[
-              {
-                toolSpec: {
-                  name: "getNYC",
-                  description:
-                    "the user asked about sessions, speakers, sponsors, and general FAQ for the New York amazon summit.",
-                  inputSchema: {
-                    json: NYCToolSchema,
-                  },
-                }
-              },
-              {
-                toolSpec: {
-                  name: "getBrandedCalling",
-                  description:
-                    "the user asked about the location or status of their order or shipment or package. Please return the results as the closest street name and intersection.",
-                  inputSchema: {
-                    json: BrandedToolSchema,
-                  },
-                }
-              },
-              {
-                toolSpec: {
-                  name: "getDateAndTimeTool",
-                  description:
-                    "Get information about the current date and time.",
-                  inputSchema: {
-                    json: DefaultToolSchema,
-                  },
-                },
-              },
-              {
-                toolSpec: {
-                  name: "getWeatherTool",
-                  description:
-                    "Get the current weather for a given location, based on its WGS84 coordinates.",
-                  inputSchema: {
-                    json: WeatherToolSchema,
-                  },
-                },
-              },
-            ],
-            */
           },
         },
       },
